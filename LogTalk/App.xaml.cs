@@ -17,7 +17,8 @@ namespace LogTalk
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterSingleton<System.IO.FileSystemWatcher>();
+            containerRegistry.RegisterSingleton<Services.TalkService>();
         }
     }
 }

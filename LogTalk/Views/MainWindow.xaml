@@ -10,10 +10,71 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Medium"
-        TextElement.FontSize="14"
+        TextElement.FontSize="16"
         d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
-        Title="LogTalk">
+        Title="LogTalk"
+        ResizeMode="CanMinimize"
+        SizeToContent="WidthAndHeight">
     <Grid>
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+        <Grid.Resources>
+            <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="Margin" Value="8"/>
+            </Style>
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Margin" Value="8"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="Margin" Value="8"/>
+                <Setter Property="MinWidth" Value="32"/>
+                <Setter Property="TextAlignment" Value="Right"/>
+            </Style>
+            <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="Margin" Value="8"/>
+            </Style>
+            <Style TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
+                <Setter Property="Margin" Value="8"/>
+                <Setter Property="MinWidth" Value="256"/>
+                <Setter Property="Minimum" Value="0"/>
+                <Setter Property="Maximum" Value="100"/>
+                <Setter Property="SmallChange" Value="1"/>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0">File</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding InputFile.Value, Mode=TwoWay}"/>
+        <Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenCommand}">...</Button>
+        <Label Grid.Row="1" Grid.Column="0">Cast</Label>
+        <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding Casts}" SelectedItem="{Binding SelectedCast.Value, Mode=TwoWay}"/>
+        <Label Grid.Row="2" Grid.Column="0">Volume</Label>
+        <Slider Grid.Row="2" Grid.Column="1" Value="{Binding Volume.Value, Mode=TwoWay}"/>
+        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Volume.Value, Mode=TwoWay}"/>
+        <Label Grid.Row="3" Grid.Column="0">Speed</Label>
+        <Slider Grid.Row="3" Grid.Column="1" Value="{Binding Speed.Value, Mode=TwoWay}"/>
+        <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Speed.Value, Mode=TwoWay}"/>
+        <Label Grid.Row="4" Grid.Column="0">Tone</Label>
+        <Slider Grid.Row="4" Grid.Column="1" Value="{Binding Tone.Value, Mode=TwoWay}"/>
+        <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Tone.Value, Mode=TwoWay}"/>
+        <Label Grid.Row="5" Grid.Column="0">Alpha</Label>
+        <Slider Grid.Row="5" Grid.Column="1" Value="{Binding Alpha.Value, Mode=TwoWay}"/>
+        <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding Alpha.Value, Mode=TwoWay}"/>
+        <Label Grid.Row="6" Grid.Column="0">ToneScale</Label>
+        <Slider Grid.Row="6" Grid.Column="1" Value="{Binding ToneScale.Value, Mode=TwoWay}"/>
+        <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding ToneScale.Value, Mode=TwoWay}"/>
+        <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Command="{Binding ToggleWatchCommand}" Content="Start"/>
     </Grid>
 </Window>
