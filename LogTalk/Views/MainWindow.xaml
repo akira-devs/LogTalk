@@ -17,23 +17,23 @@
         SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.Resources>
+            <Thickness x:Key="GridMargin">8</Thickness>
             <Style TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
-                <Setter Property="Margin" Value="8"/>
+                <Setter Property="Margin" Value="{StaticResource GridMargin}"/>
             </Style>
             <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                <Setter Property="Margin" Value="8"/>
+                <Setter Property="Margin" Value="{StaticResource GridMargin}"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
             </Style>
             <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-                <Setter Property="Margin" Value="8"/>
+                <Setter Property="Margin" Value="{StaticResource GridMargin}"/>
                 <Setter Property="MinWidth" Value="32"/>
-                <Setter Property="TextAlignment" Value="Right"/>
             </Style>
             <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
-                <Setter Property="Margin" Value="8"/>
+                <Setter Property="Margin" Value="{StaticResource GridMargin}"/>
             </Style>
             <Style TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
-                <Setter Property="Margin" Value="8"/>
+                <Setter Property="Margin" Value="{StaticResource GridMargin}"/>
                 <Setter Property="MinWidth" Value="256"/>
                 <Setter Property="Minimum" Value="0"/>
                 <Setter Property="Maximum" Value="100"/>
@@ -62,19 +62,19 @@
         <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding Casts}" SelectedItem="{Binding SelectedCast.Value, Mode=TwoWay}"/>
         <Label Grid.Row="2" Grid.Column="0">Volume</Label>
         <Slider Grid.Row="2" Grid.Column="1" Value="{Binding Volume.Value, Mode=TwoWay}"/>
-        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Volume.Value, Mode=TwoWay}"/>
+        <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Volume.Value, Mode=TwoWay}" TextAlignment="Right"/>
         <Label Grid.Row="3" Grid.Column="0">Speed</Label>
         <Slider Grid.Row="3" Grid.Column="1" Value="{Binding Speed.Value, Mode=TwoWay}"/>
-        <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Speed.Value, Mode=TwoWay}"/>
+        <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Speed.Value, Mode=TwoWay}" TextAlignment="Right"/>
         <Label Grid.Row="4" Grid.Column="0">Tone</Label>
         <Slider Grid.Row="4" Grid.Column="1" Value="{Binding Tone.Value, Mode=TwoWay}"/>
-        <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Tone.Value, Mode=TwoWay}"/>
+        <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Tone.Value, Mode=TwoWay}" TextAlignment="Right"/>
         <Label Grid.Row="5" Grid.Column="0">Alpha</Label>
         <Slider Grid.Row="5" Grid.Column="1" Value="{Binding Alpha.Value, Mode=TwoWay}"/>
-        <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding Alpha.Value, Mode=TwoWay}"/>
+        <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding Alpha.Value, Mode=TwoWay}" TextAlignment="Right"/>
         <Label Grid.Row="6" Grid.Column="0">ToneScale</Label>
         <Slider Grid.Row="6" Grid.Column="1" Value="{Binding ToneScale.Value, Mode=TwoWay}"/>
-        <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding ToneScale.Value, Mode=TwoWay}"/>
+        <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding ToneScale.Value, Mode=TwoWay}" TextAlignment="Right"/>
         <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Command="{Binding ToggleWatchCommand}" Content="Start"/>
     </Grid>
 </Window>
