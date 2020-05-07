@@ -17,9 +17,9 @@ namespace LogTalk.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         /// <summary>
-        /// ファイル監視サービス
+        /// トークテキスト読み込みサービス
         /// </summary>
-        protected FileSystemWatcher WatchService { get; }
+        protected ITextReadService TextReadService { get; }
         /// <summary>
         /// CeVIO トークサービス
         /// </summary>
@@ -71,24 +71,15 @@ namespace LogTalk.ViewModels
         /// </summary>
         public ReactiveCommand ToggleWatchCommand { get; } = new ReactiveCommand();
 
-        protected long offset = 0;
-
-        protected readonly Decoder decoder = Encoding.UTF8.GetDecoder();
-
         /// <summary>
         /// コンストラクター
         /// </summary>
-        public MainWindowViewModel(FileSystemWatcher watchService, TalkService talkService)
+        public MainWindowViewModel(ITextReadService textReadService, TalkService talkService)
         {
-            WatchService = watchService;
+            TextReadService = textReadService;
             TalkService = talkService;
 
-            WatchService.IncludeSubdirectories = false;
-            WatchService.NotifyFilter = NotifyFilters.FileName | NotifyFilters.Size | NotifyFilters.LastWrite | NotifyFilters.LastAccess;
-            WatchService.Changed += OnChanged;
-            WatchService.Created += OnChanged;
-            WatchService.Deleted += OnChanged;
-            WatchService.Renamed += OnChanged;
+            TextReadService.Subscribe(x => TalkService.Talker.Speak(x));
 
             SelectedCast.Value = TalkService.Talker.Cast;
             SelectedCast.Subscribe(x => TalkService.Talker.Cast = x);
@@ -120,35 +111,13 @@ namespace LogTalk.ViewModels
 
         protected void ToggleWatch()
         {
-            if (!WatchService.EnableRaisingEvents)
+            if (TextReadService.IsRunning)
             {
-                var info = new FileInfo(InputFile.Value);
-
-                WatchService.Path = info.DirectoryName;
-                WatchService.Filter = info.Name;
-                offset = info.Length;
-                decoder.Reset();
+                TextReadService.Stop();
             }
-
-            WatchService.EnableRaisingEvents = !WatchService.EnableRaisingEvents;
-        }
-
-        private void OnChanged(object sender, FileSystemEventArgs e)
-        {
-            using (var stream = new FileStream(e.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
+            else
             {
-                stream.Seek(offset, SeekOrigin.Begin);
-
-                int count = 0;
-                var bytes = new byte[4 << 10];
-                var chars = new char[4 << 10];
-                while ((count = stream.Read(bytes, 0, bytes.Length)) > 0)
-                {
-                    int decoded = decoder.GetChars(bytes, 0, count, chars, 0);
-                    TalkService.Talker.Speak(new string(chars, 0, decoded));
-                }
-
-                offset = stream.Position;
+                TextReadService.Start(InputFile.Value);
             }
         }
 
