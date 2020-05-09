@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Subjects;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace LogTalk.Services
 {
@@ -39,6 +35,21 @@ namespace LogTalk.Services
     public class TextReadService : IDisposable, ITextReadService
     {
         /// <summary>
+        /// 区切り文字
+        /// </summary>
+        protected static readonly char[] SplitChars = new char[]
+        {
+            '\r',
+            '\n',
+            '。',
+            '．',
+            '？',
+            '?',
+            '！',
+            '!',
+        };
+
+        /// <summary>
         /// テキストファイルのエンコーディング
         /// </summary>
         public Encoding Encoding { get; set; } = Encoding.UTF8;
@@ -59,6 +70,14 @@ namespace LogTalk.Services
         /// テキストデコーダー
         /// </summary>
         protected Decoder decoder = null;
+        /// <summary>
+        /// テキストバッファ
+        /// </summary>
+        protected readonly char[] chars = new char[4 << 10];
+        /// <summary>
+        /// テキスト有効サイズ
+        /// </summary>
+        protected int available = 0;
 
         /// <summary>
         /// 実行状態
@@ -123,8 +142,12 @@ namespace LogTalk.Services
 
             var info = new FileInfo(filename);
 
+            // FileSystemWatcher 設定
             watcher.Path = info.DirectoryName;
             watcher.Filter = info.Name;
+
+            // 初期化
+            Reset();
             offset = info.Length;
             decoder = Encoding.GetDecoder();
 
@@ -141,24 +164,107 @@ namespace LogTalk.Services
         }
 
         /// <summary>
+        /// 内部バッファの初期化
+        /// </summary>
+        protected void Reset()
+        {
+            offset = 0;
+            decoder?.Reset();
+            available = 0;
+        }
+
+        /// <summary>
         /// Changed イベント
         /// </summary>
         protected void OnChanged(object sender, FileSystemEventArgs e)
         {
-            using (var stream = new FileStream(e.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
+            // ファイル削除
+            if (e.ChangeType == WatcherChangeTypes.Deleted)
             {
-                stream.Seek(offset, SeekOrigin.Begin);
-
-                int count = 0;
-                var bytes = new byte[4 << 10];
-                var chars = new char[4 << 10];
-                while ((count = stream.Read(bytes, 0, bytes.Length)) > 0)
+                // 未通知テキストの通知
+                if (available > 0)
                 {
-                    int decoded = decoder.GetChars(bytes, 0, count, chars, 0);
-                    subject.OnNext(new string(chars, 0, decoded));
+                    var text = new string(chars, 0, available).Trim();
+                    if (text.Length > 0) subject.OnNext(text);
                 }
 
+                // 初期化
+                Reset();
+                return;
+            }
+
+            // ファイルの継続読み込み
+            using (var stream = new FileStream(e.FullPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
+            {
+                // ストリームサイズの確認
+                if (stream.Length < offset)
+                {
+                    // 未通知テキストの通知
+                    if (available > 0)
+                    {
+                        var text = new string(chars, 0, available).Trim();
+                        if (text.Length > 0) subject.OnNext(text);
+                    }
+
+                    // 初期化
+                    Reset();
+                    offset = stream.Length;
+                    return;
+                }
+
+                // 前回の読み込み位置へ移動
+                stream.Seek(offset, SeekOrigin.Begin);
+
+                // テキスト読み込み
+                ReadText(stream);
+
+                // 今回の読み込み位置を保存
                 offset = stream.Position;
+            }
+        }
+
+        /// <summary>
+        /// テキスト読み込み
+        /// </summary>
+        protected void ReadText(Stream stream)
+        {
+            // 読み込み
+            int count = 0;
+            var bytes = new byte[4 << 10];
+            while ((count = stream.Read(bytes, 0, bytes.Length)) > 0)
+            {
+                // テキスト変換
+                int decoded = decoder.GetChars(bytes, 0, count, chars, available);
+                available += decoded;
+
+                // テキスト分解
+                int start = 0;
+                int end = 0; ;
+                for (int i = 0; i < available; i++)
+                {
+                    if (SplitChars.Contains(chars[i]))
+                    {
+                        // 区切り文字の位置を終端位置に設定
+                        end = i + 1;
+                    }
+                    else if (chars[i] == '.' && (i + i >= available || char.IsWhiteSpace(chars[i + 1])))
+                    {
+                        // 次の文字が終端、空白のピリオドの位置を終端位置に設定
+                        end = i + 1;
+                    }
+
+                    // テキスト通知
+                    if (start < end)
+                    {
+                        var text = new string(chars, start, end - start).Trim();
+                        if (text.Length > 0) subject.OnNext(text);
+                        start = end;
+                    }
+                }
+
+                // 未通知領域を先頭に移動
+                if (end < available) Array.Copy(chars, end, chars, 0, available - end);
+                available -= end;
             }
         }
     }
