@@ -1,12 +1,8 @@
 ﻿using Prism.Mvvm;
 using Reactive.Bindings;
 using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Reactive.Linq;
-using System.Text;
-using System.Windows;
 using LogTalk.Services;
 
 namespace LogTalk.ViewModels
@@ -27,7 +23,7 @@ namespace LogTalk.ViewModels
         /// <summary>
         /// CeVIO トークサービス
         /// </summary>
-        protected TalkService TalkService { get; }
+        protected ITalkService TalkService { get; }
 
         /// <summary>
         /// 入力ファイル
@@ -78,31 +74,31 @@ namespace LogTalk.ViewModels
         /// <summary>
         /// コンストラクター
         /// </summary>
-        public MainWindowViewModel(IOpenFileDialogService openFileDialogService, ITextReadService textReadService, TalkService talkService)
+        public MainWindowViewModel(IOpenFileDialogService openFileDialogService, ITextReadService textReadService, ITalkService talkService)
         {
             OpenFileDialogService = openFileDialogService;
             TextReadService = textReadService;
             TalkService = talkService;
 
-            TextReadService.Subscribe(x => TalkService.Talker.Speak(x));
+            TextReadService.Subscribe(x => TalkService.Speak(x));
 
-            SelectedCast.Value = TalkService.Talker.Cast;
-            SelectedCast.Subscribe(x => TalkService.Talker.Cast = x);
+            SelectedCast.Value = TalkService.Cast;
+            SelectedCast.Subscribe(x => TalkService.Cast = x);
 
-            Volume.Value = TalkService.Talker.Volume;
-            Volume.Subscribe(x => TalkService.Talker.Volume = x);
+            Volume.Value = TalkService.Volume;
+            Volume.Subscribe(x => TalkService.Volume = x);
 
-            Speed.Value = TalkService.Talker.Speed;
-            Speed.Subscribe(x => TalkService.Talker.Speed = x);
+            Speed.Value = TalkService.Speed;
+            Speed.Subscribe(x => TalkService.Speed = x);
 
-            Tone.Value = TalkService.Talker.Tone;
-            Tone.Subscribe(x => TalkService.Talker.Tone = x);
+            Tone.Value = TalkService.Tone;
+            Tone.Subscribe(x => TalkService.Tone = x);
 
-            Alpha.Value = TalkService.Talker.Alpha;
-            Alpha.Subscribe(x => TalkService.Talker.Alpha = x);
+            Alpha.Value = TalkService.Alpha;
+            Alpha.Subscribe(x => TalkService.Alpha = x);
 
-            ToneScale.Value = TalkService.Talker.ToneScale;
-            ToneScale.Subscribe(x => TalkService.Talker.ToneScale = x);
+            ToneScale.Value = TalkService.ToneScale;
+            ToneScale.Subscribe(x => TalkService.ToneScale = x);
 
             OpenCommand.Subscribe(Open);
 
