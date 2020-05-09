@@ -17,6 +17,10 @@ namespace LogTalk.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         /// <summary>
+        /// ファイル選択ダイアログサービス
+        /// </summary>
+        protected IOpenFileDialogService OpenFileDialogService { get; }
+        /// <summary>
         /// トークテキスト読み込みサービス
         /// </summary>
         protected ITextReadService TextReadService { get; }
@@ -74,8 +78,9 @@ namespace LogTalk.ViewModels
         /// <summary>
         /// コンストラクター
         /// </summary>
-        public MainWindowViewModel(ITextReadService textReadService, TalkService talkService)
+        public MainWindowViewModel(IOpenFileDialogService openFileDialogService, ITextReadService textReadService, TalkService talkService)
         {
+            OpenFileDialogService = openFileDialogService;
             TextReadService = textReadService;
             TalkService = talkService;
 
@@ -106,7 +111,8 @@ namespace LogTalk.ViewModels
 
         protected void Open()
         {
-
+            var filename = OpenFileDialogService.ShowDialog();
+            if (filename != null) InputFile.Value = filename;
         }
 
         protected void ToggleWatch()
