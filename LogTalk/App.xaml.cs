@@ -21,6 +21,7 @@ namespace LogTalk
             containerRegistry.RegisterSingleton<Services.IOpenFileDialogService, Services.OpenFileDialogService>();
             containerRegistry.RegisterSingleton<Services.ITextReadService, Services.TextReadService>();
             containerRegistry.RegisterSingleton<Services.ITalkService, Services.TalkService>();
+            containerRegistry.RegisterSingleton<Services.ITalkQueueService, Services.TalkQueueService>();
         }
     }
 }

@@ -24,8 +24,4 @@
     <ProjectReference Include="..\LogTalk\LogTalk.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>

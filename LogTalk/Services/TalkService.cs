@@ -164,6 +164,7 @@ namespace LogTalk.Services
                 ServiceControl.CloseHost();
             }
         }
+
         /// <summary>
         /// 発声
         /// </summary>

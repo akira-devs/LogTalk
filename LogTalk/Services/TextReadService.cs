@@ -69,7 +69,7 @@ namespace LogTalk.Services
         /// <summary>
         /// テキストデコーダー
         /// </summary>
-        protected Decoder decoder = null;
+        protected Decoder? decoder = null;
         /// <summary>
         /// テキストバッファ
         /// </summary>

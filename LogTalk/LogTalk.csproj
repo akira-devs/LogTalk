@@ -75,6 +75,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\OpenFileDialogService.cs" />
+    <Compile Include="Services\TalkQueueService.cs" />
     <Compile Include="Services\TalkService.cs" />
     <Compile Include="Services\TextReadService.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

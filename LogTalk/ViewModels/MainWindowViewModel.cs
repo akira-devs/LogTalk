@@ -2,6 +2,7 @@
 using Reactive.Bindings;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Reactive.Linq;
 using LogTalk.Services;
 
@@ -24,6 +25,10 @@ namespace LogTalk.ViewModels
         /// CeVIO トークサービス
         /// </summary>
         protected ITalkService TalkService { get; }
+        /// <summary>
+        /// トークキューイングサービス
+        /// </summary>
+        protected ITalkQueueService TalkQueueService { get; }
 
         /// <summary>
         /// 入力ファイル
@@ -74,13 +79,14 @@ namespace LogTalk.ViewModels
         /// <summary>
         /// コンストラクター
         /// </summary>
-        public MainWindowViewModel(IOpenFileDialogService openFileDialogService, ITextReadService textReadService, ITalkService talkService)
+        public MainWindowViewModel(IOpenFileDialogService openFileDialogService, ITextReadService textReadService, ITalkService talkService, ITalkQueueService talkQueueService)
         {
             OpenFileDialogService = openFileDialogService;
             TextReadService = textReadService;
             TalkService = talkService;
+            TalkQueueService = talkQueueService;
 
-            TextReadService.Subscribe(x => TalkService.Speak(x));
+            TextReadService.Subscribe(TalkQueueService.Enqueue);
 
             SelectedCast.Value = TalkService.Cast;
             SelectedCast.Subscribe(x => TalkService.Cast = x);
@@ -119,7 +125,8 @@ namespace LogTalk.ViewModels
             }
             else
             {
-                TextReadService.Start(InputFile.Value);
+                var filename = InputFile.Value;
+                if (filename != null && File.Exists(filename)) TextReadService.Start(filename);
             }
         }
 
