@@ -23,6 +23,10 @@ namespace LogTalk.Services
     public class TalkQueueService : IDisposable, ITalkQueueService
     {
         /// <summary>
+        /// 英単語の発声カタカナ 疑似変換サービス
+        /// </summary>
+        protected IKatakotoService KatakotoService { get; }
+        /// <summary>
         /// トークサービス
         /// </summary>
         protected ITalkService TalkService { get; }
@@ -39,8 +43,9 @@ namespace LogTalk.Services
         /// <summary>
         /// コンストラクター
         /// </summary>
-        public TalkQueueService(ITalkService talkService)
+        public TalkQueueService(IKatakotoService katakotoService, ITalkService talkService)
         {
+            KatakotoService = katakotoService;
             TalkService = talkService;
         }
 
@@ -88,6 +93,9 @@ namespace LogTalk.Services
         {
             lock (queue)
             {
+                // 英単語変換
+                text = KatakotoService.Translate(text);
+
                 // キューの追加
                 queue.Enqueue(text);
 

@@ -74,6 +74,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\KatakotoService.cs" />
     <Compile Include="Services\OpenFileDialogService.cs" />
     <Compile Include="Services\TalkQueueService.cs" />
     <Compile Include="Services\TalkService.cs" />
