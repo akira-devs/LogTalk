@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -238,6 +241,46 @@ namespace LogTalk.Services
         }.OrderByDescending(x => x.Key.Length).ThenBy(x => x.Key).ToList();
 
         /// <summary>
+        /// 単語発声辞書
+        /// </summary>
+        protected IDictionary<string, string> Words { get; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// コンストラクター
+        /// </summary>
+        public KatakotoService() => LoadWords();
+
+        /// <summary>
+        /// 単語辞書の読み込み
+        /// </summary>
+        protected void LoadWords()
+        {
+            var assembly = Assembly.GetEntryAssembly();
+
+            var dirs = new List<string>();
+            dirs.Add(Path.GetDirectoryName(assembly.Location));
+            dirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), assembly.GetName().Name));
+
+            foreach (var dir in dirs)
+            {
+                // 単語辞書
+                var filename = Path.Combine(dir, "words.json");
+                if (!File.Exists(filename)) continue;
+
+                // 読み込み
+                using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                {
+                    var dictionary = JsonSerializer.DeserializeAsync<Dictionary<string, string>>(stream).Result;
+                    foreach (var entry in dictionary)
+                    {
+                        Words[entry.Key] = entry.Value;
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
         /// 変換
         /// </summary>
         public string Translate(string text) => WordPattern.Replace(text, Translate);
@@ -247,6 +290,12 @@ namespace LogTalk.Services
         /// </summary>
         protected string Translate(Match match)
         {
+            // 単語辞書検索
+            if (Words.TryGetValue(match.Value, out var value))
+            {
+                return value;
+            }
+
             // 小文字変換
             var text = match.Value.ToLower();
 
