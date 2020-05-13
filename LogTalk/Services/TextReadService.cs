@@ -39,10 +39,15 @@ namespace LogTalk.Services
         /// </summary>
         protected static readonly char[] SplitChars = new char[]
         {
+            '\t',
             '\r',
             '\n',
+            '　',
+            ' ',
             '。',
             '．',
+            '、',
+            '，',
             '？',
             '?',
             '！',
