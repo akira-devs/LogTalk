@@ -123,8 +123,6 @@ namespace LogTalk.Services
 
             // Talker 生成
             talker = new Talker(TalkerAgent.AvailableCasts.FirstOrDefault());
-            talker.Volume = 100;
-            talker.ToneScale = 100;
         }
 
         /// <summary>
