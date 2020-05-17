@@ -30,7 +30,7 @@ namespace LogTalk.Services
         /// <summary>
         /// 英単語パターン
         /// </summary>
-        protected static readonly Regex WordPattern = new Regex(@"[A-Z]?[a-z]+");
+        protected static readonly Regex WordPattern = new Regex(@"[A-Z]?[a-z]+('[ts])?");
         /// <summary>
         /// 母音パターン
         /// </summary>
@@ -123,6 +123,7 @@ namespace LogTalk.Services
             { "y", "イ" },
             { "z", "ズ" },
             { "-", "ー" },
+            { "'", "" },
 
             // 子音 + 母音
             { "ba", "バ" },
@@ -290,14 +291,14 @@ namespace LogTalk.Services
         /// </summary>
         protected string Translate(Match match)
         {
+            // 小文字変換
+            var text = match.Value.ToLower();
+
             // 単語辞書検索
-            if (Words.TryGetValue(match.Value, out var value))
+            if (Words.TryGetValue(text, out var value))
             {
                 return value;
             }
-
-            // 小文字変換
-            var text = match.Value.ToLower();
 
             // 発声記号に変換
             var list = TranslateRules(SpeakingRules, text);
