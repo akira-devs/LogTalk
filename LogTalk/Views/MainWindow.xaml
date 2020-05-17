@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:u="clr-namespace:LogTalk.UI"
         xmlns:vm="clr-namespace:LogTalk.ViewModels"
         mc:Ignorable="d"
         prism:ViewModelLocator.AutoWireViewModel="True"
@@ -55,26 +56,26 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0">File</Label>
+        <Label Grid.Row="0" Grid.Column="0" Content="{u:T File}"/>
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding InputFile.Value, Mode=TwoWay}"/>
         <Button Grid.Row="0" Grid.Column="2" Command="{Binding OpenCommand}">...</Button>
-        <Label Grid.Row="1" Grid.Column="0">Cast</Label>
+        <Label Grid.Row="1" Grid.Column="0" Content="{u:T Cast}"/>
         <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding Casts}" SelectedItem="{Binding SelectedCast.Value, Mode=TwoWay}"/>
-        <Label Grid.Row="2" Grid.Column="0">Volume</Label>
+        <Label Grid.Row="2" Grid.Column="0" Content="{u:T Volume}"/>
         <Slider Grid.Row="2" Grid.Column="1" Value="{Binding Volume.Value, Mode=TwoWay}"/>
         <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Volume.Value, Mode=TwoWay}" TextAlignment="Right"/>
-        <Label Grid.Row="3" Grid.Column="0">Speed</Label>
+        <Label Grid.Row="3" Grid.Column="0" Content="{u:T Speed}"/>
         <Slider Grid.Row="3" Grid.Column="1" Value="{Binding Speed.Value, Mode=TwoWay}"/>
         <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Speed.Value, Mode=TwoWay}" TextAlignment="Right"/>
-        <Label Grid.Row="4" Grid.Column="0">Tone</Label>
+        <Label Grid.Row="4" Grid.Column="0" Content="{u:T Tone}"/>
         <Slider Grid.Row="4" Grid.Column="1" Value="{Binding Tone.Value, Mode=TwoWay}"/>
         <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding Tone.Value, Mode=TwoWay}" TextAlignment="Right"/>
-        <Label Grid.Row="5" Grid.Column="0">Alpha</Label>
+        <Label Grid.Row="5" Grid.Column="0" Content="{u:T Alpha}"/>
         <Slider Grid.Row="5" Grid.Column="1" Value="{Binding Alpha.Value, Mode=TwoWay}"/>
         <TextBox Grid.Row="5" Grid.Column="2" Text="{Binding Alpha.Value, Mode=TwoWay}" TextAlignment="Right"/>
-        <Label Grid.Row="6" Grid.Column="0">ToneScale</Label>
+        <Label Grid.Row="6" Grid.Column="0" Content="{u:T ToneScale}"/>
         <Slider Grid.Row="6" Grid.Column="1" Value="{Binding ToneScale.Value, Mode=TwoWay}"/>
         <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding ToneScale.Value, Mode=TwoWay}" TextAlignment="Right"/>
-        <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Command="{Binding ToggleWatchCommand}" Content="Start"/>
+        <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Command="{Binding ToggleWatchCommand}" Content="{u:T Start}"/>
     </Grid>
 </Window>

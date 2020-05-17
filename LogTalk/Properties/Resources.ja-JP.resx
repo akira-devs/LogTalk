@@ -118,30 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alpha" xml:space="preserve">
-    <value>Alpha</value>
+    <value>声質</value>
   </data>
   <data name="Cast" xml:space="preserve">
-    <value>Cast</value>
+    <value>キャスト</value>
   </data>
   <data name="File" xml:space="preserve">
-    <value>File</value>
+    <value>ファイル</value>
   </data>
   <data name="Speed" xml:space="preserve">
-    <value>Speed</value>
+    <value>速さ</value>
   </data>
   <data name="Start" xml:space="preserve">
-    <value>Start</value>
+    <value>開始</value>
   </data>
   <data name="Stop" xml:space="preserve">
-    <value>Stop</value>
+    <value>停止</value>
   </data>
   <data name="Tone" xml:space="preserve">
-    <value>Tone</value>
+    <value>高さ</value>
   </data>
   <data name="ToneScale" xml:space="preserve">
-    <value>ToneScale</value>
+    <value>抑揚</value>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value>Volume</value>
+    <value>音量</value>
   </data>
 </root>
