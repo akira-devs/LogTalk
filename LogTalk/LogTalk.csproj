@@ -74,11 +74,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Services\AppSettingsService.cs" />
     <Compile Include="Services\KatakotoService.cs" />
     <Compile Include="Services\OpenFileDialogService.cs" />
     <Compile Include="Services\TalkQueueService.cs" />
     <Compile Include="Services\TalkService.cs" />
     <Compile Include="Services\TextReadService.cs" />
+    <Compile Include="UI\DataContextDisposeAction.cs" />
     <Compile Include="UI\TExtension.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
@@ -116,6 +118,9 @@
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes">
       <Version>3.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.1.19</Version>
     </PackageReference>
     <PackageReference Include="Prism.DryIoc" Version="7.2.0.1422" />
     <PackageReference Include="ReactiveProperty">
