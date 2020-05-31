@@ -41,6 +41,9 @@
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>CS8632</NoWarn>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Properties\Resources\AppIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CeVIO.Talk.RemoteService, Version=2.1.4.0, Culture=neutral, PublicKeyToken=85bf362f6144cc53, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -48,6 +51,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -129,6 +133,9 @@
     <PackageReference Include="System.Text.Json">
       <Version>4.7.2</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Resources\AppIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

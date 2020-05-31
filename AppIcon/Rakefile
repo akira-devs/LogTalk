@@ -1,0 +1,12 @@
+require 'rake/clean'
+
+SOURCES = FileList['**/*.svg']
+OUTPUTS = SOURCES.ext('.ico')
+
+rule '.ico' => '.svg' do |t|
+  sh 'convert', '-define', 'icon:auto-resize=256,96,64,48,32,16', t.source, t.name
+end
+
+task default: OUTPUTS
+
+CLOBBER.include(OUTPUTS)
