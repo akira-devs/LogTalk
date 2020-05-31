@@ -13,6 +13,10 @@ namespace LogTalk.Services
     public interface ITalkService
     {
         /// <summary>
+        /// CeVIO Creative Studio の起動状態
+        /// </summary>
+        bool IsHostStarted { get; }
+        /// <summary>
         /// 利用可能なキャスト名
         /// </summary>
         string[] AvailableCasts { get; }
@@ -55,6 +59,10 @@ namespace LogTalk.Services
     /// </summary>
     public class TalkService : IDisposable, ITalkService
     {
+        /// <summary>
+        /// CeVIO Creative Studio の起動状態
+        /// </summary>
+        public bool IsHostStarted => ServiceControl.IsHostStarted;
         /// <summary>
         /// 利用可能なキャスト名
         /// </summary>
@@ -119,7 +127,7 @@ namespace LogTalk.Services
         public TalkService()
         {
             // CeVIO Creative Studio 起動
-            ServiceControl.StartHost(true);
+            ServiceControl.StartHost(false);
 
             // Talker 生成
             talker = new Talker(TalkerAgent.AvailableCasts.FirstOrDefault());

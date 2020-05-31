@@ -79,6 +79,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\AppSettingsService.cs" />
+    <Compile Include="Services\Extensions\AppSettingsExtension.cs" />
     <Compile Include="Services\KatakotoService.cs" />
     <Compile Include="Services\OpenFileDialogService.cs" />
     <Compile Include="Services\TalkQueueService.cs" />

@@ -18,7 +18,11 @@
         ResizeMode="CanMinimize"
         SizeToContent="WidthAndHeight">
     <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadSettingsCommand}"/>
+        </i:EventTrigger>
         <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding SaveSettingsCommand}"/>
             <u:DataContextDisposeAction/>
         </i:EventTrigger>
     </i:Interaction.Triggers>

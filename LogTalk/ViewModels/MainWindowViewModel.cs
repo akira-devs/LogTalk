@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Reactive.Linq;
 using LogTalk.Services;
+using LogTalk.Services.Extensions;
 
 namespace LogTalk.ViewModels
 {
@@ -13,6 +14,10 @@ namespace LogTalk.ViewModels
     /// </summary>
     public class MainWindowViewModel : BindableBase
     {
+        /// <summary>
+        /// アプリケーション設定サービス
+        /// </summary>
+        protected IAppSettingsService AppSettingsService { get; }
         /// <summary>
         /// ファイル選択ダイアログサービス
         /// </summary>
@@ -68,6 +73,14 @@ namespace LogTalk.ViewModels
         [Range(0, 100)]
         public ReactiveProperty<uint> ToneScale { get; } = new ReactiveProperty<uint>();
         /// <summary>
+        /// 設定ファイルの読み込みコマンド
+        /// </summary>
+        public ReactiveCommand LoadSettingsCommand { get; } = new ReactiveCommand();
+        /// <summary>
+        /// 設定ファイルの保存コマンド
+        /// </summary>
+        public ReactiveCommand SaveSettingsCommand { get; } = new ReactiveCommand();
+        /// <summary>
         /// 開くコマンド
         /// </summary>
         public ReactiveCommand OpenCommand { get; } = new ReactiveCommand();
@@ -79,8 +92,9 @@ namespace LogTalk.ViewModels
         /// <summary>
         /// コンストラクター
         /// </summary>
-        public MainWindowViewModel(IOpenFileDialogService openFileDialogService, ITextReadService textReadService, ITalkService talkService, ITalkQueueService talkQueueService)
+        public MainWindowViewModel(IAppSettingsService appSettingsService, IOpenFileDialogService openFileDialogService, ITextReadService textReadService, ITalkService talkService, ITalkQueueService talkQueueService)
         {
+            AppSettingsService = appSettingsService;
             OpenFileDialogService = openFileDialogService;
             TextReadService = textReadService;
             TalkService = talkService;
@@ -106,9 +120,54 @@ namespace LogTalk.ViewModels
             ToneScale.Value = TalkService.ToneScale;
             ToneScale.Subscribe(x => TalkService.ToneScale = x);
 
+            LoadSettingsCommand.Subscribe(LoadSettings);
+            SaveSettingsCommand.Subscribe(SaveSettings);
+
             OpenCommand.Subscribe(Open);
 
             ToggleWatchCommand.Subscribe(ToggleWatch);
+        }
+
+        /// <summary>
+        /// 設定の読み込み
+        /// </summary>
+        protected void LoadSettings()
+        {
+            // サービス利用可能チェック
+            if (!TalkService.IsHostStarted) return;
+
+            // 読み込み
+            AppSettingsService.Load();
+
+            // 設定反映
+            AppSettingsService.TryGetProperty(nameof(InputFile), InputFile);
+            AppSettingsService.TryGetProperty(nameof(SelectedCast), SelectedCast);
+            AppSettingsService.TryGetProperty(nameof(Volume), Volume);
+            AppSettingsService.TryGetProperty(nameof(Speed), Speed);
+            AppSettingsService.TryGetProperty(nameof(Tone), Tone);
+            AppSettingsService.TryGetProperty(nameof(Alpha), Alpha);
+            AppSettingsService.TryGetProperty(nameof(ToneScale), ToneScale);
+        }
+
+        /// <summary>
+        /// 設定の書き込み
+        /// </summary>
+        protected void SaveSettings()
+        {
+            // サービス利用可能チェック
+            if (!TalkService.IsHostStarted) return;
+
+            // 設定反映
+            AppSettingsService[nameof(InputFile)] = InputFile.Value;
+            AppSettingsService[nameof(SelectedCast)] = SelectedCast.Value;
+            AppSettingsService[nameof(Volume)] = Volume.Value.ToString();
+            AppSettingsService[nameof(Speed)] = Speed.Value.ToString();
+            AppSettingsService[nameof(Tone)] = Tone.Value.ToString();
+            AppSettingsService[nameof(Alpha)] = Alpha.Value.ToString();
+            AppSettingsService[nameof(ToneScale)] = ToneScale.Value.ToString();
+
+            // 書き込み
+            AppSettingsService.Save();
         }
 
         protected void Open()
