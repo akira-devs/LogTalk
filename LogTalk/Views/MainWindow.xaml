@@ -16,7 +16,8 @@
         d:DataContext="{d:DesignInstance vm:MainWindowViewModel}"
         Title="LogTalk"
         ResizeMode="CanMinimize"
-        SizeToContent="WidthAndHeight">
+        SizeToContent="Height"
+        Width="640">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadSettingsCommand}"/>
@@ -86,6 +87,19 @@
         <Label Grid.Row="6" Grid.Column="0" Content="{u:T ToneScale}"/>
         <Slider Grid.Row="6" Grid.Column="1" Value="{Binding ToneScale.Value, Mode=TwoWay}"/>
         <TextBox Grid.Row="6" Grid.Column="2" Text="{Binding ToneScale.Value, Mode=TwoWay}" TextAlignment="Right"/>
-        <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Command="{Binding ToggleWatchCommand}" Content="{u:T Start}"/>
+        <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Command="{Binding ToggleWatchCommand}">
+            <Button.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsRunning.Value}" Value="False">
+                            <Setter Property="Content" Value="{u:T Start}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsRunning.Value}" Value="True">
+                            <Setter Property="Content" Value="{u:T Stop}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Window>

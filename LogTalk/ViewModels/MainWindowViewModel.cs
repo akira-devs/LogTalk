@@ -73,6 +73,10 @@ namespace LogTalk.ViewModels
         [Range(0, 100)]
         public ReactiveProperty<uint> ToneScale { get; } = new ReactiveProperty<uint>();
         /// <summary>
+        /// 実行状態
+        /// </summary>
+        public ReactiveProperty<bool> IsRunning { get; } = new ReactiveProperty<bool>();
+        /// <summary>
         /// 設定ファイルの読み込みコマンド
         /// </summary>
         public ReactiveCommand LoadSettingsCommand { get; } = new ReactiveCommand();
@@ -187,6 +191,8 @@ namespace LogTalk.ViewModels
                 var filename = InputFile.Value;
                 if (filename != null && File.Exists(filename)) TextReadService.Start(filename);
             }
+
+            IsRunning.Value = TextReadService.IsRunning;
         }
 
 
