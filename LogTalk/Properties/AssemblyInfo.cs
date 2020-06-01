@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LogTalk")]
-[assembly: AssemblyCopyright("Copyright © Akira 2020")]
+[assembly: AssemblyCopyright("Copyright (C) akira 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
