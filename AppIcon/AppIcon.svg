@@ -7,12 +7,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
-   sodipodi:docname="AppIcon.svg"
-   id="svg10"
-   height="512"
+   version="1.1"
    width="512"
-   version="1.1">
+   height="512"
+   id="svg10"
+   sodipodi:docname="AppIcon.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
   <title
      id="title837">AppIcon</title>
   <metadata
@@ -57,62 +57,62 @@
   <defs
      id="defs14" />
   <sodipodi:namedview
-     inkscape:document-rotation="0"
-     inkscape:current-layer="layer2"
-     inkscape:window-maximized="1"
-     inkscape:window-y="-8"
-     inkscape:window-x="-8"
-     inkscape:cy="269.81613"
-     inkscape:cx="184.04321"
-     inkscape:zoom="1"
-     inkscape:showpageshadow="false"
-     inkscape:pagecheckerboard="true"
-     showgrid="true"
-     id="namedview12"
-     inkscape:window-height="1017"
-     inkscape:window-width="1920"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0"
-     guidetolerance="10"
-     gridtolerance="10"
-     objecttolerance="10"
-     borderopacity="1"
+     pagecolor="#ffffff"
      bordercolor="#666666"
-     pagecolor="#ffffff">
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview12"
+     showgrid="true"
+     inkscape:pagecheckerboard="true"
+     inkscape:showpageshadow="false"
+     inkscape:zoom="1"
+     inkscape:cx="184.04321"
+     inkscape:cy="269.81613"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0">
     <inkscape:grid
-       spacingy="4"
-       spacingx="4"
-       empspacing="4"
+       type="xygrid"
        id="grid4493"
-       type="xygrid" />
+       empspacing="4"
+       spacingx="4"
+       spacingy="4" />
   </sodipodi:namedview>
   <g
-     style="display:inline"
-     inkscape:label="Background"
+     inkscape:groupmode="layer"
      id="layer1"
-     inkscape:groupmode="layer">
+     inkscape:label="Background"
+     style="display:inline">
     <rect
-       x="0"
-       y="0"
-       width="512"
-       height="512"
-       rx="0"
+       style="fill:#2196f3;fill-opacity:1;stroke-width:8"
        id="rect2"
-       style="fill:#66ccff;fill-opacity:1;stroke-width:8" />
+       rx="0"
+       height="512"
+       width="512"
+       y="0"
+       x="0" />
   </g>
   <g
-     inkscape:label="Object"
+     inkscape:groupmode="layer"
      id="layer2"
-     inkscape:groupmode="layer">
+     inkscape:label="Object">
     <path
-       sodipodi:nodetypes="ccccccccc"
-       id="path872"
+       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:48;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 112,48 h 192 l 96,112 v 80 l -112,64 112,80 v 80 H 112 Z"
-       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:48;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       id="path872"
+       sodipodi:nodetypes="ccccccccc" />
     <path
-       sodipodi:nodetypes="ccc"
-       id="path876"
+       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:48;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 288,48 V 160 H 400"
-       style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:48;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       id="path876"
+       sodipodi:nodetypes="ccc" />
   </g>
 </svg>
