@@ -249,7 +249,18 @@ namespace LogTalk.Utils
         /// <summary>
         /// コンストラクター
         /// </summary>
-        public KatakotoTranslator() => LoadWords();
+        public KatakotoTranslator()
+        {
+            // カーネギーメロン大学 発音辞書の読み込み
+            var dictionary = CmuPronouncingDictionary.Load();
+            foreach (var entry in dictionary)
+            {
+                Words[entry.Key] = entry.Value;
+            }
+
+            // 単語辞書の読み込み
+            LoadWords();
+        }
 
         /// <summary>
         /// 単語辞書の読み込み

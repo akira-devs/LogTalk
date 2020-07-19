@@ -31,3 +31,4 @@ Copyright (C) akira 2020
 * [Material Design In XAML](http://materialdesigninxaml.net/)
 * [Prism Library](https://prismlibrary.com/)
 * [ReactiveProperty](https://github.com/runceel/ReactiveProperty)
+* [the Carnegie Mellon Pronouncing Dictionary](http://www.speech.cs.cmu.edu/cgi-bin/cmudict)
