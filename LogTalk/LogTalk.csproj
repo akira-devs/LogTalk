@@ -80,7 +80,7 @@
     </Compile>
     <Compile Include="Services\AppSettingsService.cs" />
     <Compile Include="Services\Extensions\AppSettingsExtension.cs" />
-    <Compile Include="Services\KatakotoService.cs" />
+    <Compile Include="Utils\KatakotoTranslator.cs" />
     <Compile Include="Services\OpenFileDialogService.cs" />
     <Compile Include="Services\TalkQueueService.cs" />
     <Compile Include="Services\TalkService.cs" />

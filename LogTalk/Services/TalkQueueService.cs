@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogTalk.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,13 +24,13 @@ namespace LogTalk.Services
     public class TalkQueueService : IDisposable, ITalkQueueService
     {
         /// <summary>
-        /// 英単語の発声カタカナ 疑似変換サービス
-        /// </summary>
-        protected IKatakotoService KatakotoService { get; }
-        /// <summary>
         /// トークサービス
         /// </summary>
         protected ITalkService TalkService { get; }
+        /// <summary>
+        /// 翻訳処理
+        /// </summary>
+        protected ITranslator Translator { get; }
 
         /// <summary>
         /// キュー
@@ -43,10 +44,10 @@ namespace LogTalk.Services
         /// <summary>
         /// コンストラクター
         /// </summary>
-        public TalkQueueService(IKatakotoService katakotoService, ITalkService talkService)
+        public TalkQueueService(ITalkService talkService, ITranslator translator)
         {
-            KatakotoService = katakotoService;
             TalkService = talkService;
+            Translator = translator;
         }
 
         /// <summary>
@@ -93,8 +94,8 @@ namespace LogTalk.Services
         {
             lock (queue)
             {
-                // 英単語変換
-                text = KatakotoService.Translate(text);
+                // 翻訳
+                text = Translator.Translate(text);
 
                 // キューの追加
                 queue.Enqueue(text);

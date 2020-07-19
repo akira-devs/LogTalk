@@ -9,23 +9,23 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace LogTalk.Services
+namespace LogTalk.Utils
 {
     /// <summary>
-    /// 英単語の発声カタカナ 疑似変換サービス
+    /// 翻訳処理
     /// </summary>
-    public interface IKatakotoService
+    public interface ITranslator
     {
         /// <summary>
-        /// 変換
+        /// 翻訳
         /// </summary>
         string Translate(string text);
     }
 
     /// <summary>
-    /// 英単語の発声カタカナ 疑似変換サービス
+    /// 英単語の発声カタカナ 疑似翻訳処理
     /// </summary>
-    public class KatakotoService : IKatakotoService
+    public class KatakotoTranslator : ITranslator
     {
         /// <summary>
         /// 英単語パターン
@@ -249,14 +249,14 @@ namespace LogTalk.Services
         /// <summary>
         /// コンストラクター
         /// </summary>
-        public KatakotoService() => LoadWords();
+        public KatakotoTranslator() => LoadWords();
 
         /// <summary>
         /// 単語辞書の読み込み
         /// </summary>
         protected void LoadWords()
         {
-            var assembly = Assembly.GetEntryAssembly();
+            var assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
 
             var dirs = new List<string>();
             dirs.Add(Path.GetDirectoryName(assembly.Location));
@@ -280,14 +280,13 @@ namespace LogTalk.Services
             }
         }
 
-
         /// <summary>
-        /// 変換
+        /// 翻訳
         /// </summary>
         public string Translate(string text) => WordPattern.Replace(text, Translate);
 
         /// <summary>
-        /// 変換
+        /// 翻訳
         /// </summary>
         protected string Translate(Match match)
         {
