@@ -26,7 +26,7 @@
     <PackageReference Include="MaterialDesignThemes" Version="4.0.0" />
     <PackageReference Include="Prism.DryIoc" Version="8.0.0.1909" />
     <PackageReference Include="ReactiveProperty.WPF" Version="7.8.1" />
-    <PackageReference Include="System.Text.Json" Version="5.0.1" />
+    <PackageReference Include="System.Text.Json" Version="8.0.4" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CeVIO.Talk.RemoteService">
